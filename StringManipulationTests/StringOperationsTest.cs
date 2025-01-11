@@ -40,5 +40,28 @@ namespace StringManipulationTests
             Assert.False(result);
 
         }
+
+        [Fact]
+        public void QuantintyInWordsTest()
+        {
+            // Arrange
+            var operations = new StringOperations();
+            // Act
+            var result = operations.QuantintyInWords("Dog", 10);
+            // Assert            
+            Assert.StartsWith("diez", result);
+            Assert.Contains("Dog", result);
+        }
+
+        [Fact]
+        public void TruncateStringExceptionTest()
+        {
+            // Arrange
+            var operations = new StringOperations();
+            
+            // Assert
+            Assert.ThrowsAny<ArgumentException>(() => operations.GetStringLength(null));
+        }
+
     }
 }
