@@ -8,37 +8,31 @@ namespace StringManipulationTests
         public void ConcatenateStringsTest()
         {
             // Arrange
-            var operations =  new StringOperations();
+            var operations = new StringOperations();
             // Act
             var result = operations.ConcatenateStrings("Cadena1", "Cadena2");
             // Assert
-            Assert.NotNull(result); 
-            Assert.NotEmpty(result);    
-            Assert.Equal("Cadena1 Cadena2", result); 
+            Assert.NotNull(result);
+            Assert.NotEmpty(result);
+            Assert.Equal("Cadena1 Cadena2", result);
         }
 
-        [Fact]
-        public void IsPalindromoTrueTest()
+        [Theory]
+        [InlineData("reconocer", true)]
+        [InlineData("conocimiento", false)]
+        public void IsPalindromoTest(string word, bool validareTure)
         {
             // Arrange
             var operations = new StringOperations();
+
             // Act
-            var result = operations.IsPalindrome("reconocer");
+            var result = operations.IsPalindrome(word);
+
             // Assert            
-            Assert.True(result);
-
-        }
-
-        [Fact]
-        public void IsPalindromoFalseTest()
-        {
-            // Arrange
-            var operations = new StringOperations();
-            // Act
-            var result = operations.IsPalindrome("conocimiento");
-            // Assert            
-            Assert.False(result);
-
+            if(validareTure)
+                Assert.True(result);
+            else 
+                Assert.False(result);
         }
 
         [Fact]
@@ -58,9 +52,24 @@ namespace StringManipulationTests
         {
             // Arrange
             var operations = new StringOperations();
-            
+
             // Assert
             Assert.ThrowsAny<ArgumentException>(() => operations.GetStringLength(null));
+        }
+
+        [Theory]
+        [InlineData("V", 5)]
+        [InlineData("X", 10)]
+        [InlineData("III", 3)]
+        public void FormRomanToNumnerTest(string romanNumber, int expected)
+        {
+            // Arrange
+            var operations = new StringOperations();
+
+            var result = operations.FromRomanToNumber(romanNumber);
+
+            // Assert
+            Assert.Equal(expected, result); 
         }
 
     }
