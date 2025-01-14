@@ -1,4 +1,6 @@
-﻿using StringManipulation;
+﻿using Microsoft.Extensions.Logging;
+using Moq;
+using StringManipulation;
 
 namespace StringManipulationTests
 {
@@ -52,7 +54,6 @@ namespace StringManipulationTests
         {
             // Arrange
             var operations = new StringOperations();
-
             // Assert
             Assert.ThrowsAny<ArgumentException>(() => operations.GetStringLength(null));
         }
@@ -65,12 +66,25 @@ namespace StringManipulationTests
         {
             // Arrange
             var operations = new StringOperations();
-
+            // Act
             var result = operations.FromRomanToNumber(romanNumber);
-
             // Assert
             Assert.Equal(expected, result); 
         }
+
+        [Fact]
+        public void CountOccurrencesTest()
+        {
+            // Arrange
+            var mockLogger = new Mock<ILogger<StringOperations>>();
+            var operations = new StringOperations(mockLogger.Object);
+            
+            // Act
+            var result = operations.CountOccurrences("Oscar Andres Ramos Lopez", 's');
+            // Assert
+            Assert.Equal(3, result);
+        }
+
 
     }
 }
