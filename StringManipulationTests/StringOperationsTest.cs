@@ -85,6 +85,32 @@ namespace StringManipulationTests
             Assert.Equal(3, result);
         }
 
+        [Fact]
+        public void ReadFileTest()
+        {
+            // Arrange
+            var operations = new StringOperations();
+            var mockFile = new Mock<IFileReaderConector>();
+
+            /*
+             * con esta hacemos la consulta por un parametro en especifico.
+             */
+            //mockFile.Setup(f => f.ReadString("texto.txt")).Returns("Lectura con exito");
+            
+            /*
+             * aqui lo que estamos diciendo no importa el parametro el metodo siempre nos regresara "Lectura con exito"
+             */
+            mockFile.Setup(f => f.ReadString(It.IsAny<string>())).Returns("Lectura con exito");
+
+            // Act
+            var result = operations.ReadFile(mockFile.Object, "texto.txt");
+
+            // Assert
+            Assert.Equal("Lectura con exito", result);
+        }
+
+
+
 
     }
 }
