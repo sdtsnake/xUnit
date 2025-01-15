@@ -55,6 +55,43 @@ Coverlet es una herramienta para analizar la cobertura de código de las pruebas
 
 ---
 
+## **Generación de Reportes de Cobertura con ReportGenerator**
+Para visualizar los resultados de la cobertura en un formato más accesible, como HTML, utiliza la herramienta **ReportGenerator**.
+
+### **Instalación de ReportGenerator**
+Antes de generar los reportes, asegúrate de instalar la herramienta globalmente:
+```bash
+dotnet tool install -g dotnet-reportgenerator-globaltool
+```
+> **Nota:** Si este comando no se ejecuta, no podrás generar los reportes.
+
+### **Generar el archivo XML de cobertura**
+Primero, ejecuta las pruebas unitarias con Coverlet para generar el archivo de cobertura en formato Cobertura:
+```bash
+dotnet test /p:CollectCoverage=true /p:CoverletOutputFormat=cobertura /p:CoverletOutput=./coverage/
+```
+Esto generará un archivo llamado `coverage.cobertura.xml` en el directorio `./coverage/`.
+
+### **Generar el reporte en HTML**
+Con el archivo `coverage.cobertura.xml`, ejecuta el siguiente comando:
+```bash
+reportgenerator "-reports:coverage/coverage.cobertura.xml" "-targetdir:coverage-report" -reporttypes:Html
+```
+
+### **Explicación de los parámetros:**
+- **-reports:** Ruta al archivo XML generado por Coverlet.
+- **-targetdir:** Directorio donde se generarán los reportes en formato HTML.
+- **-reporttypes:** Especifica los formatos de los reportes (en este caso, HTML).
+
+### **Ubicación esperada de los archivos:**
+- Asegúrate de que el archivo `coverage.cobertura.xml` esté en el directorio desde el cual ejecutas el comando `reportgenerator`. Si no está, utiliza una ruta absoluta o relativa correcta.
+- El reporte HTML se generará en la carpeta especificada en el parámetro `-targetdir` (por ejemplo, `./coverage-report/`).
+
+### **Visualizar el reporte:**
+Abre el archivo `index.html` dentro del directorio generado (`coverage-report`) en tu navegador para ver los resultados de la cobertura.
+
+---
+
 ## **Exclusión de cobertura por namespace**
 Puedes excluir ciertos namespaces de la cobertura ejecutando el siguiente comando:
 ```bash
@@ -77,4 +114,5 @@ public class ClaseExcluida {
 
 ## **Referencias útiles**
 - [Documentación oficial de Coverlet](https://github.com/coverlet-coverage/coverlet)
+- [Documentación oficial de ReportGenerator](https://github.com/danielpalme/ReportGenerator)
 - [xUnit - Sitio Oficial](https://xunit.net/)
